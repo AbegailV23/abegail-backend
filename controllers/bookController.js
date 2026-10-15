@@ -22,3 +22,23 @@ export const createBook = async (req, res) =>{
         });
     }
 }
+
+export const editBook = async (req, res) =>{
+    const {name, author} = req.body;
+    const {id} = req.params;
+    const book = {id: parseInt(id), name, author};
+
+    try{
+        const updateBook = await bookService.updateBook(book);
+        res.status(200).json({
+            success: true,
+            message: updateBook
+        });
+    }catch(e){
+        console.error(e);
+        res.status(500).json({
+            error: "Internal Server Error"
+        });
+
+    }
+}
